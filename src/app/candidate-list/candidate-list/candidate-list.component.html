@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="header">
+    <h2>Candidate List</h2>
+    <p>Will display all the candidates</p>
+  </div>
+  <div class="searchbox">
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" placeholder="Search by Name" class="form-control"
+          (keyup)="searchCandidate($event.target.value)">
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-warning" (click)="getCandidateWithExp()">Candidates with 2+ Exp.</button>
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-warning" (click)="removeCandidates()">Remove Candidates</button>
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-success" (click)="refreshCandidateList()">Refresh Candidates</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="candidate-list">
+    <table class="table">
+      <tr class="thead-light">
+        <th>Name <span (click)="sortCandidates('name')">sort</span></th>
+        <th>Department</th>
+        <th>Joining Date <span (click)="sortCandidates('date')">sort</span></th>
+      </tr>
+      <ng-container *ngIf="candidateList.length>0;else noRecords">
+        <tr *ngFor="let candidate of candidateList">
+          <td>{{candidate.name}}</td>
+          <td>{{candidate.department}}</td>
+          <td>{{candidate.joining_date|date}}</td>
+        </tr>
+      </ng-container>
+      <ng-template #noRecords>
+        <tr>
+          <td colspan="3">No Records Found</td>
+        </tr>
+      </ng-template>
+    </table>
+  </div>
+  <div class="candidate-info">
+    <div class="row">
+      <div class="col-md-2">
+        <button type="button" class="btn btn-warning" (click)="getDistinctDep()">Get Distinct</button>
+      </div>
+    </div>
+    <div class="alert alert-warning" role="alert" *ngFor="let dis of distinctDetails">
+      Department Name : {{dis.departmentName}} <br>
+      Count : {{dis.count}}
+    </div>
+  </div>
+</div>
